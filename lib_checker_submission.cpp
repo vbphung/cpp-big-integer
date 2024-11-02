@@ -56,8 +56,8 @@ BigInt::BigInt(float n) { BigInt(int(n)); }
 
 BigInt::BigInt(string s) {
   sign = s[0] != '-';
-  for (int i = (s[0] == '-') ? 1 : 0; i < s.length(); ++i)
-    value = s[i] + value;
+  value = s.substr(sign ? 0 : 1);
+  reverse(value.begin(), value.end());
 }
 
 BigInt BigInt::abs() const {
