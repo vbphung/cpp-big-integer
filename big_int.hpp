@@ -60,6 +60,7 @@ BigInt::BigInt(string s) {
   sign = s[0] != '-';
   value = s.substr(sign ? 0 : 1);
   reverse(value.begin(), value.end());
+  trim();
 }
 
 BigInt BigInt::abs() const {
@@ -94,6 +95,10 @@ BigInt BigInt::operator+(const BigInt &number) const {
 
 BigInt BigInt::operator-(const BigInt &number) const {
   if (sign == number.sign) {
+    if (abs() == number.abs()) {
+      return 0;
+    }
+
     if (abs() > number.abs()) {
       BigInt n = *this;
       int current;
@@ -242,7 +247,7 @@ ostream &operator<<(ostream &fout, const BigInt &n) {
 }
 
 void BigInt::trim() {
-  while (value[value.length() - 1] == '0')
+  while (!value.empty() && value[value.length() - 1] == '0')
     value.pop_back();
   if (value.length() == 0)
     sign = true;
